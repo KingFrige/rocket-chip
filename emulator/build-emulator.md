@@ -30,6 +30,7 @@ cd /mnt/Other/riscv/chipsalliance/rocket-chip && java -Xmx2G -Xss8M -XX:MaxPermS
 
 ##### use sbt gen other module
 ```
+> cd <rocket-chip>
 > sbt
 > runMain freechips.rocketchip.system.Generator --help
 
