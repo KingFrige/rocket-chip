@@ -1,3 +1,4 @@
+### build
 #### compile firrtl
 ```
 make -C /mnt/Other/riscv/chipsalliance/rocket-chip/firrtl SBT="java -Xmx2G -Xss8M -XX:MaxPermSize=256M -jar /mnt/Other/riscv/chipsalliance/rocket-chip/sbt-launch.jar" root_dir=/mnt/Other/riscv/chipsalliance/rocket-chip/firrtl build-scala
