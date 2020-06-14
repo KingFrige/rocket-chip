@@ -25,6 +25,21 @@ cp -p /mnt/Other/riscv/chipsalliance/rocket-chip/firrtl/utils/bin/firrtl.jar /mn
 ```
 mkdir -p /mnt/Other/riscv/chipsalliance/rocket-chip/emulator/generated-src/
 cd /mnt/Other/riscv/chipsalliance/rocket-chip && java -Xmx2G -Xss8M -XX:MaxPermSize=256M -jar /mnt/Other/riscv/chipsalliance/rocket-chip/sbt-launch.jar "runMain freechips.rocketchip.system.Generator -td /mnt/Other/riscv/chipsalliance/rocket-chip/emulator/generated-src -T freechips.rocketchip.system.TestHarness -C freechips.rocketchip.system.DefaultConfig "
+
+```
+
+##### use sbt gen other module
+```
+> sbt
+> runMain freechips.rocketchip.system.Generator --help
+
+> show discoveredMainClasses
+
+> runMain freechips.rocketchip.system.Generator -td /mnt/Other/riscv/chipsalliance/rocket-chip/emulator/generated-src -T freechips.rocketchip.system.TestHarness -C freechips.rocketchip.system.DefaultConfig
+
+> runMain freechips.rocketchip.unittest.Generator -td /mnt/Other/riscv/chipsalliance/rocket-chip/emulator/unittest-generated-src -T freechips.rocketchip.unittest.TestHarness -C freechips.rocketchip.unittest.AMBAUnitTestConfig
+
+> runMain freechips.rocketchip.groundtest.Generator -td /mnt/Other/riscv/chipsalliance/rocket-chip/emulator/groundtest-generated-src -T freechips.rocketchip.groundtest.TestHarness -C freechips.rocketchip.groundtest.TraceGenBufferlessConfig
 ```
 
 #### gen rocketchip verilog
@@ -40,6 +55,29 @@ java -Xmx2G -Xss8M -XX:MaxPermSize=256M -cp "/mnt/Other/riscv/chipsalliance/rock
     -fct firrtl.passes.InlineInstances, \
      \
 
+
+mkdir -p /mnt/Other/riscv/chipsalliance/rocket-chip/emulator/unittest-generated-src/
+java -Xmx2G -Xss8M -XX:MaxPermSize=256M -cp "/mnt/Other/riscv/chipsalliance/rocket-chip/firrtl/utils/bin/firrtl.jar":"/mnt/Other/riscv/chipsalliance/rocket-chip/target/scala-2.12/classes:/mnt/Other/riscv/chipsalliance/rocket-chip/chisel3/target/scala-2.12/classes:/mnt/Other/riscv/chipsalliance/rocket-chip/chisel3/core/target/scala-2.12/classes:/mnt/Other/riscv/chipsalliance/rocket-chip/chisel3/macros/target/scala-2.12/classes" firrtl.Driver -i /mnt/Other/riscv/chipsalliance/rocket-chip/emulator/unittest-generated-src/freechips.rocketchip.unittest.AMBAUnitTestConfig.fir \
+    -o /mnt/Other/riscv/chipsalliance/rocket-chip/emulator/unittest-generated-src/freechips.rocketchip.unittest.AMBAUnitTestConfig.v \
+    -X verilog \
+    --infer-rw TestHarness \
+    --repl-seq-mem -c:TestHarness:-o:/mnt/Other/riscv/chipsalliance/rocket-chip/emulator/unittest-generated-src/freechips.rocketchip.unittest.AMBAUnitTestConfig.conf \
+    -faf /mnt/Other/riscv/chipsalliance/rocket-chip/emulator/unittest-generated-src/freechips.rocketchip.unittest.AMBAUnitTestConfig.anno.json \
+    -td /mnt/Other/riscv/chipsalliance/rocket-chip/emulator/unittest-generated-src/freechips.rocketchip.unittest.AMBAUnitTestConfig/ \
+    -fct firrtl.passes.InlineInstances, \
+     \
+
+
+mkdir -p /mnt/Other/riscv/chipsalliance/rocket-chip/emulator/groundtest-generated-src/
+java -Xmx2G -Xss8M -XX:MaxPermSize=256M -cp "/mnt/Other/riscv/chipsalliance/rocket-chip/firrtl/utils/bin/firrtl.jar":"/mnt/Other/riscv/chipsalliance/rocket-chip/target/scala-2.12/classes:/mnt/Other/riscv/chipsalliance/rocket-chip/chisel3/target/scala-2.12/classes:/mnt/Other/riscv/chipsalliance/rocket-chip/chisel3/core/target/scala-2.12/classes:/mnt/Other/riscv/chipsalliance/rocket-chip/chisel3/macros/target/scala-2.12/classes" firrtl.Driver -i /mnt/Other/riscv/chipsalliance/rocket-chip/emulator/groundtest-generated-src/freechips.rocketchip.groundtest.TraceGenBufferlessConfig.fir \
+    -o /mnt/Other/riscv/chipsalliance/rocket-chip/emulator/groundtest-generated-src/freechips.rocketchip.groundtest.TraceGenBufferlessConfig.v \
+    -X verilog \
+    --infer-rw TestHarness \
+    --repl-seq-mem -c:TestHarness:-o:/mnt/Other/riscv/chipsalliance/rocket-chip/emulator/groundtest-generated-src/freechips.rocketchip.groundtest.TraceGenBufferlessConfig.conf \
+    -faf /mnt/Other/riscv/chipsalliance/rocket-chip/emulator/groundtest-generated-src/freechips.rocketchip.groundtest.TraceGenBufferlessConfig.anno.json \
+    -td /mnt/Other/riscv/chipsalliance/rocket-chip/emulator/groundtest-generated-src/freechips.rocketchip.groundtest.TraceGenBufferlessConfig/ \
+    -fct firrtl.passes.InlineInstances, \
+     \
 ```
 
 #### install verilator
