@@ -36,11 +36,11 @@ cd /mnt/Other/riscv/chipsalliance/rocket-chip && java -Xmx2G -Xss8M -XX:MaxPermS
 
 > show discoveredMainClasses
 
-> runMain freechips.rocketchip.system.Generator -td /mnt/Other/riscv/chipsalliance/rocket-chip/emulator/generated-src -T freechips.rocketchip.system.TestHarness -C freechips.rocketchip.system.DefaultConfig
+> runMain freechips.rocketchip.system.Generator -td emulator/generated-src -T freechips.rocketchip.system.TestHarness -C freechips.rocketchip.system.DefaultConfig
 
-> runMain freechips.rocketchip.unittest.Generator -td /mnt/Other/riscv/chipsalliance/rocket-chip/emulator/unittest-generated-src -T freechips.rocketchip.unittest.TestHarness -C freechips.rocketchip.unittest.AMBAUnitTestConfig
+> runMain freechips.rocketchip.unittest.Generator -td emulator/unittest-generated-src -T freechips.rocketchip.unittest.TestHarness -C freechips.rocketchip.unittest.AMBAUnitTestConfig
 
-> runMain freechips.rocketchip.groundtest.Generator -td /mnt/Other/riscv/chipsalliance/rocket-chip/emulator/groundtest-generated-src -T freechips.rocketchip.groundtest.TestHarness -C freechips.rocketchip.groundtest.TraceGenBufferlessConfig
+> runMain freechips.rocketchip.groundtest.Generator -td emulator/groundtest-generated-src -T freechips.rocketchip.groundtest.TestHarness -C freechips.rocketchip.groundtest.TraceGenBufferlessConfig
 ```
 
 #### gen rocketchip verilog
