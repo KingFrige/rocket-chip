@@ -1,3 +1,5 @@
+#### verilog transform to cpp
+```bash
 mkdir -p /home/korben/riscv/chipsalliance/rocket-chip/emulator/generated-src/freechips.rocketchip.system.DefaultConfig
 
 /home/korben/riscv/chipsalliance/rocket-chip/emulator/verilator/install/bin/verilator  \
@@ -41,3 +43,4 @@ mkdir -p /home/korben/riscv/chipsalliance/rocket-chip/emulator/generated-src/fre
   /home/korben/riscv/chipsalliance/rocket-chip/emulator/generated-src/freechips.rocketchip.system.DefaultConfig/VTestHarness.h \
 
 make VM_PARALLEL_BUILDS=1 -C /home/korben/riscv/chipsalliance/rocket-chip/emulator/generated-src/freechips.rocketchip.system.DefaultConfig -f VTestHarness.mk
+```
