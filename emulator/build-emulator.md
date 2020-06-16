@@ -2,11 +2,14 @@
 #### compile firrtl
 ```
 make -C /mnt/Other/riscv/chipsalliance/rocket-chip/firrtl SBT="java -Xmx2G -Xss8M -XX:MaxPermSize=256M -jar /mnt/Other/riscv/chipsalliance/rocket-chip/sbt-launch.jar" root_dir=/mnt/Other/riscv/chipsalliance/rocket-chip/firrtl build-scala
+
+> sbt assembly
 ```
 
 #### firrtl Test / assembly
 ```
 cd /mnt/Other/riscv/chipsalliance/rocket-chip/firrtl && java -Xmx2G -Xss8M -XX:MaxPermSize=256M -jar /mnt/Other/riscv/chipsalliance/rocket-chip/sbt-launch.jar "Test / assembly"
+> sbt "Test / assembly"
 
 touch /mnt/Other/riscv/chipsalliance/rocket-chip/firrtl/utils/bin/firrtl.jar  # update time
 
