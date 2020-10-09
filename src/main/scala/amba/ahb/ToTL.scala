@@ -11,13 +11,18 @@ import freechips.rocketchip.util._
 
 case class AHBToTLNode()(implicit valName: ValName) extends MixedAdapterNode(AHBImpSlave, TLImp)(
   dFn = { case mp =>
-    TLMasterPortParameters.v1(
-      clients = mp.masters.map { m =>
+    TLMasterPortParameters.v2(
+      masters = mp.masters.map { m =>
+        // This value should be constrained by a data width parameter that flows from masters to slaves
         // AHB fixed length transfer size maximum is 16384 = 1024 * 16 bits, hsize is capped at 111 = 1024 bit transfer size and hburst is capped at 111 = 16 beat burst
-        // This master can only produce:
-        // emitsGet = TransferSizes(1, 2048),
-        // emitsPutFull = TransferSizes(1, 2048)
-          TLMasterParameters.v1(name = m.name, nodePath = m.nodePath)
+          TLMasterParameters.v2(
+            name     = m.name,
+            nodePath = m.nodePath,
+            emits    = TLMasterToSlaveTransferSizes(
+                       get     = TransferSizes(1, 2048),
+                       putFull = TransferSizes(1, 2048)
+                       )
+          )
       },
       requestFields = AMBAProtField() +: mp.requestFields,
       responseKeys  = mp.responseKeys)
@@ -145,7 +150,7 @@ class AHBToTL()(implicit p: Parameters) extends LazyModule
       // Double-check that the above register has the intended effect since
       // this is an additional requirement not tested by third-party VIP.
       // hresp(0) && !hreadyout => next cycle has same hrdata value
-      assert (!RegNext(in.hresp(0) && !in.hreadyout) || RegNext(in.hrdata) === in.hrdata)
+      assert (!RegNext(in.hresp(0) && !in.hreadyout, false.B) || RegNext(in.hrdata) === in.hrdata)
 
       // In a perfect world, we'd use these signals
       val hresp = d_fail || (out.d.valid && (out.d.bits.denied || out.d.bits.corrupt))

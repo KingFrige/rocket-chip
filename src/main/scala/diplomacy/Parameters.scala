@@ -97,9 +97,10 @@ case class TransferSizes(min: Int, max: Int)
   def intersect(x: TransferSizes) =
     if (x.max < min || max < x.min) TransferSizes.none
     else TransferSizes(scala.math.max(min, x.min), scala.math.min(max, x.max))
-  
+
   // Not a union, because the result may contain sizes contained by neither term
-  def cover(x: TransferSizes) = {
+  // NOT TO BE CONFUSED WITH COVERPOINTS
+  def mincover(x: TransferSizes) = {
     if (none) {
       x
     } else if (x.none) {
@@ -116,7 +117,7 @@ object TransferSizes {
   def apply(x: Int) = new TransferSizes(x)
   val none = new TransferSizes(0)
 
-  def cover(seq: Seq[TransferSizes]) = seq.foldLeft(none)(_ cover _)
+  def mincover(seq: Seq[TransferSizes]) = seq.foldLeft(none)(_ mincover _)
   def intersect(seq: Seq[TransferSizes]) = seq.reduce(_ intersect _)
 
   implicit def asBool(x: TransferSizes) = !x.none

@@ -69,6 +69,11 @@ package object util {
 
   implicit class DataToAugmentedData[T <: Data](val x: T) extends AnyVal {
     def holdUnless(enable: Bool): T = Mux(enable, x, RegEnable(x, enable))
+
+    def getElements: Seq[Element] = x match {
+      case e: Element => Seq(e)
+      case a: Aggregate => a.getElements.flatMap(_.getElements)
+    }
   }
 
   implicit class SeqMemToAugmentedSeqMem[T <: Data](val x: SeqMem[T]) extends AnyVal {
@@ -251,6 +256,12 @@ package object util {
       l += x
     }
     map.view.map({ case (k, vs) => k -> vs.toList }).toList
+  }
+
+  def heterogeneousOrGlobalSetting[T](in: Seq[T], n: Int): Seq[T] = in.size match {
+    case 1 => List.fill(n)(in.head)
+    case x if x == n => in
+    case _ => throw new Exception(s"must provide exactly 1 or $n of some field, but got:\n$in")
   }
 
 /** provides operators useful for working with bidirectional [[Bundle]]s
